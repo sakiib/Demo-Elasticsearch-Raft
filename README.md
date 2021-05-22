@@ -154,4 +154,74 @@ root
 }
 ```
 
-* Get the Secret - `kubectl get secret -n demo es-cred-rqst-z3pdjr -o yaml -o json | jq '.data'`
+* Get the Secret
+`kubectl get secret -n demo es-cred-rqst-z3pdjr -o yaml -o json`
+```
+{
+    "apiVersion": "v1",
+    "data": {
+        "password": "MHYtYW5vTW1KZHgta3g3d3RMYzk=",
+        "username": "di1rdWJlcm5ldGVzLWRlbW8tazhzLi0uZGVtby5lcy1xLWM2SE5NZU1seFRaZ0Z3a1pCcHFyLTE2MjE2NzU5MDM="
+    },
+    "kind": "Secret",
+    "metadata": {
+        "creationTimestamp": "2021-05-22T09:31:51Z",
+        "managedFields": [
+            {
+                "apiVersion": "v1",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:data": {
+                        ".": {},
+                        "f:password": {},
+                        "f:username": {}
+                    },
+                    "f:metadata": {
+                        "f:ownerReferences": {
+                            ".": {},
+                            "k:{\"uid\":\"49d61d8a-52df-46a2-9dd2-74343c94f722\"}": {
+                                ".": {},
+                                "f:apiVersion": {},
+                                "f:blockOwnerDeletion": {},
+                                "f:controller": {},
+                                "f:kind": {},
+                                "f:name": {},
+                                "f:uid": {}
+                            }
+                        }
+                    },
+                    "f:type": {}
+                },
+                "manager": "vault-operator",
+                "operation": "Update",
+                "time": "2021-05-22T09:31:51Z"
+            }
+        ],
+        "name": "es-cred-rqst-z3pdjr",
+        "namespace": "demo",
+        "ownerReferences": [
+            {
+                "apiVersion": "engine.kubevault.com/v1alpha1",
+                "blockOwnerDeletion": true,
+                "controller": true,
+                "kind": "DatabaseAccessRequest",
+                "name": "es-cred-rqst",
+                "uid": "49d61d8a-52df-46a2-9dd2-74343c94f722"
+            }
+        ],
+        "resourceVersion": "12296",
+        "selfLink": "/api/v1/namespaces/demo/secrets/es-cred-rqst-z3pdjr",
+        "uid": "443c41a5-8822-4751-9f06-a06e0008ebe0"
+    },
+    "type": "Opaque"
+}
+```
+
+`kubectl get secret -n demo es-cred-rqst-z3pdjr -o yaml -o json | jq '.data'`
+
+```
+{
+  "password": "MHYtYW5vTW1KZHgta3g3d3RMYzk=",
+  "username": "di1rdWJlcm5ldGVzLWRlbW8tazhzLi0uZGVtby5lcy1xLWM2SE5NZU1seFRaZ0Z3a1pCcHFyLTE2MjE2NzU5MDM="
+}
+```
