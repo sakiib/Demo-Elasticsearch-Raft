@@ -1,5 +1,5 @@
 # AppsCode Demo (28-05-21)
-### Manage Elasticsearch credentials using the KubeVault Operator, Secret Engine and the Integrated Storage Backend (Raft) to persist Vault's data.
+### Manage Elasticsearch credentials using the KubeVault Operator, Vault Database Secret Engine and the Integrated Storage Backend (Raft) to persist Vault's data.
 
 ### Install KubeDB Enterprise Edition
 * Create kind cluster - `kind create cluster --image kindest/node:v1.18.15@sha256:5c1b980c4d0e0e8e7eb9f36f7df525d079a96169c8a8f20d8bd108c0d0889cc4`
