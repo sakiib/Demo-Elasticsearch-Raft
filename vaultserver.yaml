@@ -1,0 +1,40 @@
+apiVersion: kubevault.com/v1alpha1
+kind: VaultServer
+metadata:
+  name: vault
+  namespace: demo
+spec:
+  dataSources:
+  - secret:
+      secretName: es-quickstart-http-cert
+  replicas: 1
+  version: "1.7.0"
+  serviceTemplates:
+  - alias: vault
+    metadata:
+      annotations:
+        name: sakibvault  
+    spec:
+      type: NodePort
+  - alias: stats
+    spec:
+      type: ClusterIP
+  backend:
+    raft:
+      path: "/vault/data"
+      storage:
+        storageClassName: "standard"
+        resources:
+          requests:
+            storage: 1Gi
+  unsealer:
+    secretShares: 4
+    secretThreshold: 2
+    mode:
+      kubernetesSecret:
+        secretName: vault-keys
+  monitor:
+      agent: prometheus.io
+      prometheus:
+        exporter:
+          resources: {}
