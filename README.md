@@ -226,6 +226,93 @@ root
 }
 ```
 
+* `kubectl get all -n demo`
+```
+NAME                  READY   STATUS    RESTARTS   AGE
+pod/es-quickstart-0   1/1     Running   0          166m
+pod/es-quickstart-1   1/1     Running   0          163m
+pod/es-quickstart-2   1/1     Running   0          163m
+pod/vault-0           3/3     Running   0          83m
+
+NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                         AGE
+service/es-quickstart          ClusterIP   10.102.203.75   <none>        9200/TCP                        166m
+service/es-quickstart-master   ClusterIP   None            <none>        9300/TCP                        166m
+service/es-quickstart-pods     ClusterIP   None            <none>        9200/TCP                        166m
+service/vault                  NodePort    10.106.57.102   <none>        8200:30757/TCP,8201:31801/TCP   155m
+service/vault-internal         ClusterIP   None            <none>        8200/TCP,8201/TCP               155m
+service/vault-stats            ClusterIP   10.106.10.219   <none>        56790/TCP                       155m
+
+NAME                             READY   AGE
+statefulset.apps/es-quickstart   3/3     166m
+statefulset.apps/vault           1/1     155m
+
+NAME                                               TYPE                       VERSION   AGE
+appbinding.appcatalog.appscode.com/es-quickstart   kubedb.com/elasticsearch   7.9.1     166m
+appbinding.appcatalog.appscode.com/vault                                                155m
+
+NAME                                                      STATUS     AGE
+databaseaccessrequest.engine.kubevault.com/es-cred-rqst   Approved   134m
+
+NAME                                                   STATUS    AGE
+elasticsearchrole.engine.kubevault.com/es-quickstart   Success   135m
+
+NAME                                              STATUS    AGE
+secretengine.engine.kubevault.com/es-quickstart   Success   141m
+
+NAME                              REPLICAS   VERSION   STATUS    AGE
+vaultserver.kubevault.com/vault   1          1.7.0     Running   155m
+
+NAME                                                                   STATUS    AGE
+vaultpolicybinding.policy.kubevault.com/vault-auth-method-controller   Success   153m
+
+NAME                                                            STATUS    AGE
+vaultpolicy.policy.kubevault.com/vault-auth-method-controller   Success   153m
+
+NAME                                     VERSION          STATUS   AGE
+elasticsearch.kubedb.com/es-quickstart   xpack-7.9.1-v1   Ready    166m
+```
+
+* `kubectl get all  -n kube-system`
+```
+pod/coredns-66bff467f8-8lb4p                     1/1     Running   0          3h15m
+pod/coredns-66bff467f8-x84ss                     1/1     Running   0          3h15m
+pod/etcd-kind-control-plane                      1/1     Running   0          3h15m
+pod/kindnet-k4bq4                                1/1     Running   0          3h15m
+pod/kube-apiserver-kind-control-plane            1/1     Running   0          3h15m
+pod/kube-controller-manager-kind-control-plane   1/1     Running   0          3h15m
+pod/kube-proxy-mhcvr                             1/1     Running   0          3h15m
+pod/kube-scheduler-kind-control-plane            1/1     Running   0          3h15m
+pod/kubedb-kubedb-autoscaler-5dd66688db-dwbc2    1/1     Running   0          169m
+pod/kubedb-kubedb-community-7566877c7d-jsd7x     1/1     Running   0          169m
+pod/kubedb-kubedb-enterprise-7b4b5db7ff-kcs6f    1/1     Running   0          169m
+pod/kubevault-community-6649447d44-q6pg2         1/1     Running   0          160m
+
+NAME                               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE
+service/kube-dns                   ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP   3h16m
+service/kubedb-kubedb-autoscaler   ClusterIP   10.105.13.6      <none>        443/TCP                  169m
+service/kubedb-kubedb-community    ClusterIP   10.102.183.227   <none>        443/TCP                  169m
+service/kubedb-kubedb-enterprise   ClusterIP   10.103.179.238   <none>        443/TCP                  169m
+service/kubevault-community        ClusterIP   10.106.51.16     <none>        443/TCP                  160m
+
+NAME                        DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+daemonset.apps/kindnet      1         1         1       1            1           <none>                   3h16m
+daemonset.apps/kube-proxy   1         1         1       1            1           kubernetes.io/os=linux   3h16m
+
+NAME                                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/coredns                    2/2     2            2           3h16m
+deployment.apps/kubedb-kubedb-autoscaler   1/1     1            1           169m
+deployment.apps/kubedb-kubedb-community    1/1     1            1           169m
+deployment.apps/kubedb-kubedb-enterprise   1/1     1            1           169m
+deployment.apps/kubevault-community        1/1     1            1           160m
+
+NAME                                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/coredns-66bff467f8                    2         2         2       3h15m
+replicaset.apps/kubedb-kubedb-autoscaler-5dd66688db   1         1         1       169m
+replicaset.apps/kubedb-kubedb-community-7566877c7d    1         1         1       169m
+replicaset.apps/kubedb-kubedb-enterprise-7b4b5db7ff   1         1         1       169m
+replicaset.apps/kubevault-community-6649447d44        1         1         1       160m
+```
+
 * [KubeDB](https://kubedb.com/)
 * [KubeVault](https://kubevault.com/)
 * [Elasticsearch Secret Engine](https://www.vaultproject.io/docs/secrets/databases/elasticdb)
