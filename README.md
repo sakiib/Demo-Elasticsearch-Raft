@@ -225,3 +225,8 @@ root
   "username": "di1rdWJlcm5ldGVzLWRlbW8tazhzLi0uZGVtby5lcy1xLWM2SE5NZU1seFRaZ0Z3a1pCcHFyLTE2MjE2NzU5MDM="
 }
 ```
+
+* [KubeDB](https://kubedb.com/)
+* [KubeVault](https://kubevault.com/)
+* [Elasticsearch Secret Engine](https://www.vaultproject.io/docs/secrets/databases/elasticdb)
+* [Integrated Storage Backend - Raft](https://www.vaultproject.io/docs/configuration/storage/raft)
