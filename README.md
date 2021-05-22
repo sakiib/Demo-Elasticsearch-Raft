@@ -1,4 +1,4 @@
-# Appscode Demo (28-05-21)
+# AppsCode Demo (28-05-21)
 ### Manage Elasticsearch credentials using the KubeVault Operator, Secret Engine and the Integrated Storage Backend (Raft) to persist Vault's data.
 
 ### Install KubeDB Enterprise Edition
