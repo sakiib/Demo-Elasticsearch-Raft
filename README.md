@@ -2,15 +2,15 @@
 ### Manage Elasticsearch credentials using the KubeVault Operator, Vault Database Secret Engine and the Integrated Storage Backend (Raft) to persist Vault's data.
 
 ### Install KubeDB Enterprise Edition
-* Create kind cluster - `kind create cluster --image kindest/node:v1.18.15@sha256:5c1b980c4d0e0e8e7eb9f36f7df525d079a96169c8a8f20d8bd108c0d0889cc4`
-* Go to the AppsCode License Server & use the cluster ID to get the license of the KubeDB Enterprise Edition & put it in `license.txt`. Get the Cluster ID - `kubectl get ns kube-system -o=jsonpath='{.metadata.uid}'`
+* Create kind cluster - `$ kind create cluster --image kindest/node:v1.18.15@sha256:5c1b980c4d0e0e8e7eb9f36f7df525d079a96169c8a8f20d8bd108c0d0889cc4`
+* Go to the AppsCode License Server & use the cluster ID to get the license of the KubeDB Enterprise Edition & put it in `license.txt`. Get the Cluster ID - `$ kubectl get ns kube-system -o=jsonpath='{.metadata.uid}'`
 * Install KubeDB using Helm3 
-`helm repo add appscode https://charts.appscode.com/stable/` 
-`helm repo update`
-`helm search repo appscode/kubedb`
+`$ helm repo add appscode https://charts.appscode.com/stable/` 
+`$ helm repo update`
+`$ helm search repo appscode/kubedb`
 
 ```
-helm install kubedb appscode/kubedb \
+$ helm install kubedb appscode/kubedb \
     --version v2021.04.16 \
     --namespace kube-system \
     --set-file global.license=/home/sakib/demo-es-raft/license.txt \
@@ -20,37 +20,37 @@ helm install kubedb appscode/kubedb \
 
 ### Elasticsearch quickstart using KubeDB
 * Create the namespace `demo`
-`kubectl create namespace demo`
+`$ kubectl create namespace demo`
 * Find available StorageClass
-`kubectl get storageclass`
+`$ kubectl get storageclass`
 * Find available Elasticsearch version
-`kubectl get elasticsearchversions`
+`$ kubectl get elasticsearchversions`
 * Create an Elasticsearch Cluster
-`kubectl apply -f elasticsearch.yaml`
+`$ kubectl apply -f elasticsearch.yaml`
 * Use port forwarding to connect with Elasticsearch database
-`kubectl port-forward -n demo svc/es-quickstart 9200`
+`$ kubectl port-forward -n demo svc/es-quickstart 9200`
 * Connection information
-Username: `kubectl get secret -n demo es-quickstart-elastic-cred -o jsonpath='{.data.username}' | base64 -d`
-Password: `kubectl get secret -n demo es-quickstart-elastic-cred -o jsonpath='{.data.password}' | base64 -d`
+Username: `$ kubectl get secret -n demo es-quickstart-elastic-cred -o jsonpath='{.data.username}' | base64 -d`
+Password: `$ kubectl get secret -n demo es-quickstart-elastic-cred -o jsonpath='{.data.password}' | base64 -d`
 * Check health of the Elasticsearch database
-`curl -XGET -k -u '<username>:<password>' "https://localhost:9200/_cluster/health?pretty"`
+`$ curl -XGET -k -u '<username>:<password>' "https://localhost:9200/_cluster/health?pretty"`
 
 ### Install KubeVault Operator
-* `cd cd go/src/kubevault.dev/operator/` branch - `raft`
-* `export REGISTRY=sakibalamin`
-* `make push install`
+* `$ cd go/src/kubevault.dev/operator/` (branch - `raft`)
+* `$ export REGISTRY=sakibalamin`
+* `$ make push install`
 
 ### Deploy VaultServer
-* Patch the VaultServer version - `kubectl apply -f vsversion.yaml`
-* Deploy VaultServer - `kubectl apply -f vaultserver.yaml`
-* Get all the Secrets - `kubectl get secret -n demo`
-* Get the vault keys (vault-root-token, unseal-keys) - `kubectl get secret -n demo vault-keys -o yaml`
-* Base-64 decode the vault-root-token - `echo "cy5yenVIQUNsMDdtUzhzemF3QWNuZ202dlk=" | base64 -d`
-* Export as VAULT_TOKEN ENV VAR - `export VAULT_TOKEN=s.rzuHACl07mS8szawAcngm6vY`
-* Export VAULT_ADDR - `export VAULT_ADDR='https://127.0.0.1:8200'`
-* Export VAULT_SKIP_VERIFY - `export VAULT_SKIP_VERIFY=true`
-* Use port forwarding to connect with Vault - `kubectl port-forward -n demo svc/vault 8200`
-* Check Vault Status - `vault status` 
+* Patch the VaultServer version - `$ kubectl apply -f vsversion.yaml`
+* Deploy VaultServer - `$ kubectl apply -f vaultserver.yaml`
+* Get all the Secrets - `$ kubectl get secret -n demo`
+* Get the vault keys (vault-root-token, unseal-keys) - `$ kubectl get secret -n demo vault-keys -o yaml`
+* Base-64 decode the vault-root-token - `$ echo "cy5yenVIQUNsMDdtUzhzemF3QWNuZ202dlk=" | base64 -d`
+* Export as VAULT_TOKEN ENV VAR - `$ export VAULT_TOKEN=s.rzuHACl07mS8szawAcngm6vY`
+* Export VAULT_ADDR - `$ export VAULT_ADDR='https://127.0.0.1:8200'`
+* Export VAULT_SKIP_VERIFY - `$ export VAULT_SKIP_VERIFY=true`
+* Use port forwarding to connect with Vault - `$ kubectl port-forward -n demo svc/vault 8200`
+* Check Vault Status - `$ vault status` 
 ```
 Key                     Value
 ---                     -----
@@ -71,7 +71,7 @@ Raft Committed Index    68
 Raft Applied Index      68
 ```
 
-* Check vault's secrets list - `vault secrets list`
+* Check vault's secrets list - `$ vault secrets list`
 ```
 Path          Type         Accessor              Description
 ----          ----         --------              -----------
@@ -80,7 +80,7 @@ identity/     identity     identity_c76ff30a     identity store
 sys/          system       system_7e29f09c       system endpoints used for control, policy and debugging
 ```
 
-* Check vault's policy list - `vault policy list`
+* Check vault's policy list - `$ vault policy list`
 ```
 default
 k8s.-.demo.vault-auth-method-controller
@@ -89,12 +89,12 @@ root
 ```
 
 * Enable `custom-database-path` of `database` secret
-`vault secrets enable -path=custom-database-path database`
+`$ vault secrets enable -path=custom-database-path database`
 
 * Create the SecretEngine
-`kubectl apply -f secretengine.yaml`
+`$ kubectl apply -f secretengine.yaml`
 
-* Check vault's secrets list - `vault secrets list`
+* Check vault's secrets list - `$ vault secrets list`
 ```
 Path                     Type         Accessor              Description
 ----                     ----         --------              -----------
@@ -104,7 +104,7 @@ identity/                identity     identity_c76ff30a     identity store
 sys/                     system       system_7e29f09c       system endpoints used for control, policy and debugging
 ```
 
-* Check vault's policy list - `vault policy list`
+* Check vault's policy list - `$ vault policy list`
 ```
 default
 k8s.-.demo.es-quickstart
@@ -114,15 +114,15 @@ root
 ```
 
 * Create the Secret Engine Role
-`kubectl apply -f secretenginerole.yaml`
+`$ kubectl apply -f secretenginerole.yaml`
 
 * Create a database access request
-`kubectl apply -f dbaccessrequest.yaml`
+`$ kubectl apply -f dbaccessrequest.yaml`
 
-* To Approve the request - `kubectl vault approve databaseaccessrequest es-cred-rqst -n demo`
-* To Deny the request - `kubectl vault deny databaseaccessrequest es-cred-rqst -n demo`
+* To Approve the request - `$ kubectl vault approve databaseaccessrequest es-cred-rqst -n demo`
+* To Deny the request - `$ kubectl vault deny databaseaccessrequest es-cred-rqst -n demo`
 
-* Check the database access request status - `kubectl get databaseaccessrequest es-cred-rqst -n demo -o json | jq '.status'`
+* Check the database access request status - `$ kubectl get databaseaccessrequest es-cred-rqst -n demo -o json | jq '.status'`
 ```
 {
   "conditions": [
@@ -155,7 +155,7 @@ root
 ```
 
 * Get the Secret
-`kubectl get secret -n demo es-cred-rqst-z3pdjr -o yaml -o json`
+`$ kubectl get secret -n demo es-cred-rqst-z3pdjr -o yaml -o json`
 ```
 {
     "apiVersion": "v1",
@@ -217,7 +217,7 @@ root
 }
 ```
 
-`kubectl get secret -n demo es-cred-rqst-z3pdjr -o yaml -o json | jq '.data'`
+`$ kubectl get secret -n demo es-cred-rqst-z3pdjr -o yaml -o json | jq '.data'`
 
 ```
 {
@@ -272,7 +272,7 @@ NAME                                     VERSION          STATUS   AGE
 elasticsearch.kubedb.com/es-quickstart   xpack-7.9.1-v1   Ready    166m
 ```
 
-* `kubectl get all  -n kube-system`
+* `$ kubectl get all  -n kube-system`
 ```
 pod/coredns-66bff467f8-8lb4p                     1/1     Running   0          3h15m
 pod/coredns-66bff467f8-x84ss                     1/1     Running   0          3h15m
