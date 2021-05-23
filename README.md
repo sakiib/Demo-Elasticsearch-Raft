@@ -226,7 +226,7 @@ root
 }
 ```
 
-* `kubectl get all -n demo`
+* `$ kubectl get all -n demo`
 ```
 NAME                  READY   STATUS    RESTARTS   AGE
 pod/es-quickstart-0   1/1     Running   0          166m
