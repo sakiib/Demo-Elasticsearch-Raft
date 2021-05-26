@@ -15,14 +15,14 @@
   $ helm search repo appscode/kubedb
   ```
 
-```
-$ helm install kubedb appscode/kubedb \
-    --version v2021.04.16 \
-    --namespace kube-system \
-    --set-file global.license=/home/sakib/demo-es-raft/license.txt \
-    --set kubedb-enterprise.enabled=true \
-    --set kubedb-autoscaler.enabled=true
-```
+  ```bash
+  $ helm install kubedb appscode/kubedb \
+      --version v2021.04.16 \
+      --namespace kube-system \
+      --set-file global.license=/home/sakib/demo-es-raft/license.txt \
+      --set kubedb-enterprise.enabled=true \
+      --set kubedb-autoscaler.enabled=true
+  ```
 
 ### Elasticsearch quickstart using KubeDB
 * Create the namespace `demo`
