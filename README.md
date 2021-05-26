@@ -2,12 +2,18 @@
 ### Manage Elasticsearch credentials using the KubeVault Operator, Vault Database Secret Engine and the Integrated Storage Backend (Raft) to persist Vault's data.
 
 ### Install KubeDB Enterprise Edition
-* Create kind cluster - `$ kind create cluster --image kindest/node:v1.18.15@sha256:5c1b980c4d0e0e8e7eb9f36f7df525d079a96169c8a8f20d8bd108c0d0889cc4`
-* Go to the AppsCode License Server & use the cluster ID to get the license of the KubeDB Enterprise Edition & put it in `license.txt`. Get the Cluster ID - `$ kubectl get ns kube-system -o=jsonpath='{.metadata.uid}'`
+* Create kind cluster - 
+  ```bash
+  $ kind create cluster --image kindest/node:v1.18.15@sha256:5c1b980c4d0e0e8e7eb9f36f7df525d079a96169c8a8f20d8bd108c0d0889cc4
+  ```
+* Go to the AppsCode License Server & use the cluster ID to get the license of the KubeDB Enterprise Edition & put it in `license.txt`. 
+* Get the Cluster ID - `$ kubectl get ns kube-system -o=jsonpath='{.metadata.uid}'`
 * Install KubeDB using Helm3 
-`$ helm repo add appscode https://charts.appscode.com/stable/` 
-`$ helm repo update`
-`$ helm search repo appscode/kubedb`
+  ```bash
+  $ helm repo add appscode https://charts.appscode.com/stable/
+  $ helm repo update
+  $ helm search repo appscode/kubedb
+  ```
 
 ```
 $ helm install kubedb appscode/kubedb \
@@ -36,9 +42,11 @@ Password: `$ kubectl get secret -n demo es-quickstart-elastic-cred -o jsonpath='
 `$ curl -XGET -k -u '<username>:<password>' "https://localhost:9200/_cluster/health?pretty"`
 
 ### Install KubeVault Operator
-* `$ cd go/src/kubevault.dev/operator/` (branch - `raft`)
-* `$ export REGISTRY=sakibalamin`
-* `$ make push install`
+```bash
+$ cd go/src/kubevault.dev/operator/ # (branch - raft)
+$ export REGISTRY=sakibalamin
+$ make push install
+```
 
 ### Deploy VaultServer
 * Patch the VaultServer version - `$ kubectl apply -f vsversion.yaml`
