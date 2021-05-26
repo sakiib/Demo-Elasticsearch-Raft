@@ -98,11 +98,12 @@ root
 
 When a SecretEngine CRD is created, the KubeVault operator will perform the following operations:
 
-    - Creates vault policy for the secret engine. 
-    - Updates the Kubernetes auth role of the default k8s service account created with VaultServer with a new policy. The new policy will be merged with previous policies.
-    - Enables the secrets engine at a given path. By default, they are enabled at their “type” (e.g. “aws” is enabled at “aws/").
-    - Configures the secret engine with the given configuration.
-  
+---
+* Creates vault policy for the secret engine. 
+* Updates the Kubernetes auth role of the default k8s service account created with VaultServer with a new policy. The new policy will be merged with previous policies.
+* Enables the secrets engine at a given path. By default, they are enabled at their “type” (e.g. “aws” is enabled at “aws/").
+* Configures the secret engine with the given configuration.
+---  
 
 * Check vault's secrets list - `$ vault secrets list`
 ```
