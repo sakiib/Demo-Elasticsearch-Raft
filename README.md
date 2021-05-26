@@ -94,6 +94,16 @@ root
 * Create the SecretEngine
 `$ kubectl apply -f secretengine.yaml`
 
+**SecretEngine:** A SecretEngine is a Kubernetes CustomResourceDefinition (CRD) which is designed to automate the process of enabling and configuring secret engines in Vault in a Kubernetes native way.
+
+When a SecretEngine CRD is created, the KubeVault operator will perform the following operations:
+
+    - Creates vault policy for the secret engine. 
+    - Updates the Kubernetes auth role of the default k8s service account created with VaultServer with a new policy. The new policy will be merged with previous policies.
+    - Enables the secrets engine at a given path. By default, they are enabled at their “type” (e.g. “aws” is enabled at “aws/").
+    - Configures the secret engine with the given configuration.
+  
+
 * Check vault's secrets list - `$ vault secrets list`
 ```
 Path                     Type         Accessor              Description
@@ -116,8 +126,12 @@ root
 * Create the Secret Engine Role
 `$ kubectl apply -f secretenginerole.yaml`
 
+**SecretEngineRole:** A ElasticsearchRole is a Kubernetes CustomResourceDefinition (CRD) which allows a user to create a Elasticsearch database secret engine role in a Kubernetes native way. When a ElasticsearchRole is created, the KubeVault operator creates a Vault role according to the specification.
+
 * Create a database access request
 `$ kubectl apply -f dbaccessrequest.yaml`
+
+**DatabaseAccessRequest:** A DatabaseAccessRequest is a Kubernetes CustomResourceDefinition (CRD) which allows a user to request a Vault server for database credentials in a Kubernetes native way. If DatabaseAccessRequest is approved, then the KubeVault operator will issue credentials and create Kubernetes secret containing credentials.
 
 * To Approve the request - `$ kubectl vault approve databaseaccessrequest es-cred-rqst -n demo`
 * To Deny the request - `$ kubectl vault deny databaseaccessrequest es-cred-rqst -n demo`
