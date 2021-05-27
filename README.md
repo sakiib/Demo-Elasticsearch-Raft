@@ -249,6 +249,30 @@ root
 }
 ```
 
+### Connect to Elasticsearch using the username & the password
+* set ES_PASSWORD ENV var - `$ export ES_PASSWORD=(kubectl get secret -n demo es-cred-rqst-npjlhs -o=jsonpath={.data.password} | base64 -d)`
+
+* set ES_USER ENV var - `$ export ES_USER=(kubectl get secret -n demo es-cred-rqst-npjlhs -o=jsonpath={.data.username} | base64 -d)`
+
+* check health - `$ curl -XGET -k -u "$ES_USER:$ES_PASSWORD"  "https://localhost:9200/_cluster/health?pretty"`
+  
+* create ES indices
+```bash
+$ curl -XPUT -k -u "$ES_USER:$ES_PASSWORD"  "https://localhost:9200/demo_index0"
+```
+
+* get ES indices
+```bash
+$ curl -XGET -k -u "$ES_USER:$ES_PASSWORD"  "https://localhost:9200/_cat/indices"
+```
+
+### Check the Raft Storage 
+
+* **Delete** the VaultServer - `$ kubectl delete -f vaultserver.yaml`
+* **Check** the PVC - `$ kubectl get pvc -n demo`
+* **Create** the VaultServer again - `$ kubectl apply -f vaultserver.yaml`
+* **Check** the secrets list (e.g: stop & port-forward again) - `$ vault secrets list` (Our enabled path `custom-database-path`/ still should exists)
+  
 * `$ kubectl get all -n demo`
 ```
 NAME                  READY   STATUS    RESTARTS   AGE
