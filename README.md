@@ -96,9 +96,6 @@ vault-policy-controller
 root
 ```
 
-* Enable `custom-database-path` of `database` secret
-`$ vault secrets enable -path=custom-database-path database`
-
 * Create the SecretEngine
 `$ kubectl apply -f secretengine.yaml`
 
