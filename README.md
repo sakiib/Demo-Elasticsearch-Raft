@@ -54,7 +54,7 @@ KubeVault operator is a Kubernetes controller for HashiCorp Vault. Vault is a to
 * Patch the VaultServer version - `$ kubectl apply -f vsversion.yaml`
 * Deploy VaultServer - `$ kubectl apply -f vaultserver.yaml`
 
-A VaultServer is a Kubernetes CustomResourceDefinition (CRD) which is used to deploy a HashiCorp Vault server on Kubernetes clusters in a Kubernetes native way.
+**VaultServer:** A VaultServer is a Kubernetes CustomResourceDefinition (CRD) which is used to deploy a HashiCorp Vault server on Kubernetes clusters in a Kubernetes native way.
 When a VaultServer is created, the KubeVault operator will deploy a Vault server and create necessary Kubernetes resources required for the Vault server.
 
 * Get all the Secrets - `$ kubectl get secret -n demo`
