@@ -47,10 +47,16 @@ $ cd go/src/kubevault.dev/operator/ # (branch - raft)
 $ export REGISTRY=sakibalamin
 $ make push install
 ```
+### Kubevault
+KubeVault operator is a Kubernetes controller for HashiCorp Vault. Vault is a tool for secrets management, encryption as a service, and privileged access management. Deploying, maintaining, and managing Vault in Kubernetes could be challenging. KubeVault operator eases these operational tasks so that developers can focus on solving business problems.
 
 ### Deploy VaultServer
 * Patch the VaultServer version - `$ kubectl apply -f vsversion.yaml`
 * Deploy VaultServer - `$ kubectl apply -f vaultserver.yaml`
+
+A VaultServer is a Kubernetes CustomResourceDefinition (CRD) which is used to deploy a HashiCorp Vault server on Kubernetes clusters in a Kubernetes native way.
+When a VaultServer is created, the KubeVault operator will deploy a Vault server and create necessary Kubernetes resources required for the Vault server.
+
 * Get all the Secrets - `$ kubectl get secret -n demo`
 * Get the vault keys (vault-root-token, unseal-keys) - `$ kubectl get secret -n demo vault-keys -o yaml`
 * Base-64 decode the vault-root-token - `$ echo "cy5yenVIQUNsMDdtUzhzemF3QWNuZ202dlk=" | base64 -d`
