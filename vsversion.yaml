@@ -1,12 +1,12 @@
 apiVersion: catalog.kubevault.com/v1alpha1
 kind: VaultServerVersion
 metadata:
-  name: 1.7.0
+  name: 1.7.2
 spec:
   exporter:
     image: kubevault/vault-exporter-linux-amd64:v0.3.0
   unsealer:
-    image: kubevault/vault-unsealer:v0.3.0
+    image: sakibalamin/vault-unsealer:raft-replication_linux_amd64
   vault:
-    image: vault:1.7.0
-  version: 1.7.0
+    image: vault:1.7.2
+  version: 1.7.2

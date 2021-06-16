@@ -4,11 +4,11 @@ metadata:
   name: vault
   namespace: demo
 spec:
-  dataSources:
-  - secret:
-      secretName: es-quickstart-http-cert
-  replicas: 1
-  version: "1.7.0"
+  tls:
+    certificates:
+    - alias: server
+  replicas: 3
+  version: "1.7.2"
   serviceTemplates:
   - alias: vault
     metadata:
@@ -22,14 +22,16 @@ spec:
   backend:
     raft:
       path: "/vault/data"
+      tlsSecret:
+        name: "vault-server-certs"
       storage:
         storageClassName: "standard"
         resources:
           requests:
             storage: 1Gi
   unsealer:
-    secretShares: 4
-    secretThreshold: 2
+    secretShares: 5
+    secretThreshold: 3
     mode:
       kubernetesSecret:
         secretName: vault-keys
